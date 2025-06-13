@@ -27,7 +27,7 @@ const GraphVisualizer = ({ nodesData, linksData }) => {
       
     const simulation = d3.forceSimulation(nodesData)
       .force("link", d3.forceLink(linksData).id(d => d.id).distance(100))
-      .force("charge", d3.forceManyBody().strength(-200))
+      .force("charge", d3.forceManyBody().strength(-1))
       .force("center", d3.forceCenter(width / 2, height / 2));
       
       const link = svg.selectAll("line")
@@ -60,6 +60,17 @@ const GraphVisualizer = ({ nodesData, linksData }) => {
 
 
     simulation.on("tick", () => {
+      const margin = 40;
+      const minX = margin;
+      const minY = margin;
+      const maxX = width - margin;
+      const maxY = height - margin;
+
+      nodesData.forEach(d => {
+        d.x = Math.max(minX, Math.min(maxX, d.x));
+        d.y = Math.max(minY, Math.min(maxY, d.y));
+      });
+
       link
         .attr("x1", d => {
           const dx = d.target.x - d.source.x;
