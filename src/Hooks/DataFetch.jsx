@@ -1,23 +1,27 @@
-import { useEffect, useState } from "react";
+import buildAdjList from "../components/BuildAdjList";
 
 function parseGraphInput(input) {
-  const lines = input.trim().split('\n').map(line => line.trim()).filter(Boolean);
-  if (lines.length < 2) return { nodes: [], links: [] };
+  const lines = input
+    .trim()
+    .split('\n')
+    .map(line => line.trim())
+    .filter(Boolean);
 
-  const links = lines.slice(1).map(line => {
-    const [source, target] = line.trim().split(/\s+/);
+  const links = lines.map(line => {
+    const [source, target] = line.split(/\s+/);
     return { source, target };
   });
 
-  const uniqueNodes = Array.from(
-    new Set(links.flatMap(({ source, target }) => [source, target]))
-  ).map(id => ({ id }));
+  const nodeIds = new Set();
+  links.forEach(({ source, target }) => {
+    nodeIds.add(source);
+    nodeIds.add(target);
+  });
 
-  return {
-    nodes: uniqueNodes,
-    links,
-  };
+  const nodes = Array.from(nodeIds).map(id => ({ id, color: '#4f46e5' }));
+  const adjList = buildAdjList(links.map(({ source, target }) => [source, target]));
+  
+  return { nodes, links, adjList };
 }
-
 
 export default parseGraphInput;

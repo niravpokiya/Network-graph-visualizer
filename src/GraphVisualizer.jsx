@@ -1,6 +1,15 @@
 import { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
-
+function edgeEndpoint(from, to, r = 20) {
+  const dx = to.x - from.x;
+  const dy = to.y - from.y;
+  const len = Math.sqrt(dx * dx + dy * dy);
+  const ratio = r / len;
+  return {
+    x: from.x + dx * ratio,
+    y: from.y + dy * ratio
+  };
+}
 const GraphVisualizer = ({ nodesData, linksData }) => {
   const svgRef = useRef();
 
@@ -9,11 +18,14 @@ const GraphVisualizer = ({ nodesData, linksData }) => {
     const height = 600;
 
     const svg = d3.select(svgRef.current)
-      .attr("width", width)
-      .attr("height", height)
-      .style("background", "white")
+      .attr("viewBox", `0 0 ${width} ${height}`)
+      .attr("preserveAspectRatio", "xMidYMid meet")
+      .style("width", "100%")
+      .style("height", "auto")
+      .style("background", "white");
+
       
-      const simulation = d3.forceSimulation(nodesData)
+    const simulation = d3.forceSimulation(nodesData)
       .force("link", d3.forceLink(linksData).id(d => d.id).distance(100))
       .force("charge", d3.forceManyBody().strength(-200))
       .force("center", d3.forceCenter(width / 2, height / 2));
@@ -24,25 +36,28 @@ const GraphVisualizer = ({ nodesData, linksData }) => {
       .attr("stroke", "#999")
       .attr("stroke-width", 2);
 
-      const nodeGroup = svg.selectAll("g")
+    const nodeGroup = svg.selectAll("g")
         .data(nodesData)
         .join("g")
         .call(drag(simulation));
-
+        
+    const radius = window.innerWidth < 768 ? 25 : 15;
     nodeGroup.append("circle")
-      .attr("r", 15)
-      .attr("fill", "#4f46e5");
+      .attr("r", radius)
+      .attr("fill", d => d.color || "#4f46e5"); // <-- dynamic color
 
+
+    const isMobile = window.innerWidth < 768;
+    const radii = isMobile ? 24 : 18;
+    const fontSize = isMobile ? "20px" : "12px";
     nodeGroup.append("text")
-      .text(d => d.id)
+       .text(d => d.id)
       .attr("text-anchor", "middle")
-      .attr("dy", 4)
+      .attr("dy", "0.35em") // vertical alignment fix
       .attr("fill", "#fff")
-      .attr("font-size", "12px");
+      .attr("font-size", fontSize)
+      .attr("pointer-events", "none");
 
-          
-
-    const radius = 15;
 
     simulation.on("tick", () => {
       link
