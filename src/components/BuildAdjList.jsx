@@ -10,7 +10,6 @@ function buildAdjList(edges) {
     adj[a].push(b);
     adj[b].push(a); // undirected graph
   });
-  console.log(adj)
   return adj;
 }
 export default buildAdjList

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import './App.css';
-import GraphVisualizer from './GraphVisualizer';
-import Input from './Input';
+import GraphVisualizer from './components/GraphVisualizer';
+import Input from './components/Input';
 import parseGraphInput from './Hooks/DataFetch';
 import Dfs from './components/Dfs';
 import Bfs from './components/Bfs';

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import handleDFS from './components/handleDfs';
-import handleBFS from "./components/handleBfs";
+import handleDFS from './handleDfs';
+import handleBFS from "./handleBfs";
 
 function Input({ onInputChange, nodes, setNodes, adjList }) {
   const [source, setSource] = useState('');
