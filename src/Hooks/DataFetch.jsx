@@ -1,6 +1,6 @@
 import buildAdjList from "../components/BuildAdjList";
 
-function parseGraphInput(input) {
+function parseGraphInput(input, isDirected) {
   const lines = input
     .trim()
     .split('\n')
@@ -19,7 +19,7 @@ function parseGraphInput(input) {
   });
 
   const nodes = Array.from(nodeIds).map(id => ({ id, color: '#4f46e5' }));
-  const adjList = buildAdjList(links.map(({ source, target }) => [source, target]));
+  const adjList = buildAdjList(links.map(({ source, target }) => [source, target]), isDirected);
   
   return { nodes, links, adjList };
 }

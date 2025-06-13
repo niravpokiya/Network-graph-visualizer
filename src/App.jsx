@@ -1,36 +1,32 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './App.css';
 import GraphVisualizer from './components/GraphVisualizer';
 import Input from './components/Input';
 import parseGraphInput from './Hooks/DataFetch';
-import Dfs from './components/Dfs';
-import Bfs from './components/Bfs';
+import Dfs from './Algorithms/Dfs';
+import Bfs from './Algorithms/Bfs';
 
 function App() {
   const [nodes, setNodes] = useState([]);
   const [links, setLinks] = useState([]);
   const [adjList, setAdjList] = useState({});
+  const [isDirected, setIsDirected] = useState(false)
+  const [inputText, setInputText] = useState("");
+  const [cycleDetected, setCycleDetected] = useState(false)
 
-  const handleInputChange = (e) => {
-    const input = e.target.value;
-    const { nodes, links, adjList } = parseGraphInput(input); // ⬅ Fix key name to match
+
+  
+  useEffect(() => {
+    const { nodes, links, adjList } = parseGraphInput(inputText, isDirected);
     setNodes(nodes);
     setLinks(links);
     setAdjList(adjList);
-  };
+  }, [inputText, isDirected]);
 
-  const handleDFS = async () => {
-    if (nodes.length === 0) return;
-    const src = nodes[0].id;
-    await Dfs(src, nodes, setNodes, adjList);
+  const handleInputChange = (e) => {
+    setInputText(e.target.value); // <-- just set text
   };
-
-  const handleBFS = async () => {
-    if (nodes.length === 0) return;
-    const src = nodes[0].id;
-    await Bfs(src, nodes, setNodes, adjList);
-  };
-
+ 
   return (
     <>
       <div className="container">
@@ -38,10 +34,12 @@ function App() {
         onInputChange={handleInputChange}
         nodes={nodes}
         setNodes={setNodes}
+        setIsDirected={setIsDirected}
+        isDirected={isDirected}
         adjList={adjList}
         />
         <div className="graphSection">
-          <GraphVisualizer nodesData={nodes} linksData={links} />
+          <GraphVisualizer nodesData={nodes} linksData={links} isDirected={isDirected} />
         </div>
       </div>
     </>

@@ -1,6 +1,6 @@
 import React from "react";
 
-function buildAdjList(edges) {
+function buildAdjList(edges, isDirected) {
   const adj = {};
 
   edges.forEach(([a, b]) => {
@@ -8,7 +8,8 @@ function buildAdjList(edges) {
     if (!adj[b]) adj[b] = [];
 
     adj[a].push(b);
-    adj[b].push(a); // undirected graph
+    if(!isDirected)
+      adj[b].push(a); // undirected graph
   });
   return adj;
 }

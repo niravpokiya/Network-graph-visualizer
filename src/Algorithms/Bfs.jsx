@@ -1,9 +1,13 @@
-import React from "react";
+import Reset from "../components/ResetColors";
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 async function Bfs(src, prevNodes, onNodesChange, adjList) {
+   const resetNodes = Reset(prevNodes)
+    onNodesChange(resetNodes);
+    prevNodes = resetNodes
+    
   const visited = new Set();
   const queue = [src];
 
@@ -33,7 +37,7 @@ async function Bfs(src, prevNodes, onNodesChange, adjList) {
     // ✅ Mark node as visited
     const final = updated.map(n => {
       if (n.id === nodeId) {
-        n.color = '#4f46e5';
+        n.color = 'green';
       }
       return n;
     });

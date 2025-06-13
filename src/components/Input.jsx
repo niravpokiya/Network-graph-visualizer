@@ -1,17 +1,48 @@
 import React, { useState } from "react";
-import handleDFS from './handleDfs';
-import handleBFS from "./handleBfs";
-
-function Input({ onInputChange, nodes, setNodes, adjList }) {
+import handleDFS from '../Handlers/handleDfs';
+import handleBFS from "../Handlers/handleBfs";
+import handleCycleDetection from "../Handlers/handleCycleDetection";
+import handleSCC from "../Handlers/handleSCC";
+function Input({ onInputChange, nodes, setNodes, adjList, isDirected, setIsDirected, cycleDetected, setCycleDetected }) {
   const [source, setSource] = useState('');
 
   return (
     <div className="inputSection">
-      <h1>Network Graph Visualizer</h1>
-      <h3>Input format:</h3>
-      <ul>
+      <h1 className="font-bold">Network Graph Visualizer</h1>
+      <h3 className="font-bold">Input format:</h3>
+      <ul className="list-disc pl-5 text-black">
         <li>Edges between nodes (one per line), e.g., `1 2`</li>
+        <li>Select which type of graph you are inputting ? </li>
+        <li>For finding SCCs, graph should be directed. </li>
       </ul>
+            {/* 🔘 Radio Buttons for graph type */}
+      <div className="flex items-center gap-6 my-4">
+      <label className="flex items-center space-x-2 text-black font-medium">
+        <input
+          type="radio"
+          name="graphType"
+          value="undirected"
+          checked={!isDirected}
+          onChange={() => {setIsDirected(false) }}
+          className="form-radio text-blue-600 w-4 h-4"
+        />
+        <span>Undirected</span>
+      </label>
+
+      <label className="flex items-center space-x-2 text-black font-medium">
+        <input
+          type="radio"
+          name="graphType"
+          value="directed"
+          checked={isDirected}
+          onChange={() => setIsDirected(true)}
+          className="form-radio text-blue-600 w-4 h-4"
+        />
+        <span>Directed</span>
+      </label>
+    </div>
+
+
 
       <div className="inputArea">
         <textarea
@@ -47,6 +78,18 @@ function Input({ onInputChange, nodes, setNodes, adjList }) {
           disabled={!source}
         >
           BFS
+        </button>
+        <button
+          onClick={() => handleSCC(nodes, setNodes, adjList)}
+          disabled={!isDirected}
+        >
+          Strongly Connected Components
+          <p className="text-red-500" hidden={isDirected}> Graph should be directed. </p>
+        </button>
+        <button
+          onClick={() => handleCycleDetection(1, nodes, setNodes, adjList, isDirected, setCycleDetected)}
+        >
+          Cycle Detection
         </button>
       </div>
     </div>

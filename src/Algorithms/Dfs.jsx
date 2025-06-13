@@ -1,10 +1,13 @@
-import Reset from "./ResetColors";
+import Reset from "../components/ResetColors";
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 async function Dfs(src, prevNodes, onNodesChange, adjList) {
+   const resetNodes = Reset(prevNodes)
+    onNodesChange(resetNodes);
+    prevNodes = resetNodes
 
   const visited = new Set();
 
@@ -31,7 +34,7 @@ async function Dfs(src, prevNodes, onNodesChange, adjList) {
     // ✅ Mark node as visited (green)
     const final = updated.map(n => {
     if (n.id === nodeId) {
-        n.color = '#4f46e5';
+        n.color = "green";
     }
     return n;
     });

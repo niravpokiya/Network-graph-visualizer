@@ -1,4 +1,4 @@
-import Dfs from "./Dfs";
+import Dfs from "../Algorithms/Dfs";
 
 const handleDFS = async (src, nodes, setNodes, adjList) => {
     if (nodes.length === 0) return;
