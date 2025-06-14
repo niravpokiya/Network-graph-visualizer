@@ -50,13 +50,14 @@ const GraphVisualizer = ({ nodesData, linksData, isDirected, isWeighted }) => {
 
     // Weight labels (if weighted)
     const weightLabels = isWeighted
-      ? svg.append("g").selectAll("text")
-          .data(linksData)
-          .join("text")
-          .attr("fill", "#fff")
-          .attr("font-size", "12px")
-          .attr("text-anchor", "middle")
-      : null;
+    ? svg.append("g").selectAll("text")
+        .data(linksData)
+        .join("text")
+        .attr("fill", document.documentElement.classList.contains("dark") ? "#fff" : "#000")
+        .attr("font-size", "12px")
+        .attr("text-anchor", "middle")
+    : null;
+
 
     const nodeGroup = svg.selectAll("g.node")
       .data(nodesData)
@@ -111,7 +112,7 @@ const GraphVisualizer = ({ nodesData, linksData, isDirected, isWeighted }) => {
       if (weightLabels) {
         weightLabels
           .attr("x", d => (d.source.x + d.target.x) / 2)
-          .attr("y", d => (d.source.y + d.target.y) / 2)
+          .attr("y", d => (d.source.y + d.target.y) / 2 - 8) // offset upward
           .text(d => d.weight);
       }
 
