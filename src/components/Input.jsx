@@ -3,7 +3,8 @@ import handleDFS from '../Handlers/handleDfs';
 import handleBFS from "../Handlers/handleBfs";
 import handleCycleDetection from "../Handlers/handleCycleDetection";
 import handleSCC from "../Handlers/handleSCC";
-function Input({ onInputChange, nodes, setNodes, adjList, isDirected, setIsDirected, cycleDetected, setCycleDetected }) {
+import handlePrims from "../Handlers/handlePrims"
+function Input({ onInputChange, nodes, setNodes, adjList, isDirected, setIsDirected, cycleDetected, setCycleDetected, isWeighted, setIsWeighted, links, setLinksData }) {
   const [source, setSource] = useState('');
 
   return (
@@ -14,7 +15,10 @@ function Input({ onInputChange, nodes, setNodes, adjList, isDirected, setIsDirec
         <li>Edges between nodes (one per line), e.g., `1 2`</li>
         <li>Select which type of graph you are inputting ? </li>
         <li>For finding SCCs, graph should be directed. </li>
+        <li>For visualizing DFS, BFS, source should be given. </li>
+        <li>For visualizing Prims, there should weighted graph.</li>
       </ul>
+
             {/* 🔘 Radio Buttons for graph type */}
       <div className="flex items-center gap-6 my-4">
       <label className="flex items-center space-x-2 text-black font-medium">
@@ -41,8 +45,36 @@ function Input({ onInputChange, nodes, setNodes, adjList, isDirected, setIsDirec
         <span>Directed</span>
       </label>
     </div>
+     
+     {/* Radio buttons for weighted */}
 
+      <div className="flex items-center gap-6 my-4">
+      <label className="flex items-center space-x-2 text-black font-medium">
+        <input
+          type="radio"
+          name="weighted"
+          value="unweighted"
+          checked={!isWeighted}
+          onChange={() => {setIsWeighted(false) }}
+          className="form-radio text-blue-600 w-4 h-4"
+        />
+        <span>Unweighted</span>
+      </label>
 
+      <label className="flex items-center space-x-2 text-black font-medium">
+        <input
+          type="radio"
+          name="weighted"
+          value="weighted"
+          checked={isWeighted}
+          onChange={() => setIsWeighted(true)}
+          className="form-radio text-blue-600 w-4 h-4"
+        />
+        <span>Weighted</span>
+      </label>
+    </div>
+    
+    
 
       <div className="inputArea">
         <textarea
@@ -84,12 +116,18 @@ function Input({ onInputChange, nodes, setNodes, adjList, isDirected, setIsDirec
           disabled={!isDirected}
         >
           Strongly Connected Components
-          <p className="text-red-500" hidden={isDirected}> Graph should be directed. </p>
+          {/* <p className="text-red-500" hidden={isDirected}> Graph should be directed. </p> */}
         </button>
         <button
           onClick={() => handleCycleDetection(1, nodes, setNodes, adjList, isDirected, setCycleDetected)}
         >
           Cycle Detection
+        </button>
+        <button
+          onClick={() => handlePrims(1, nodes, setNodes, adjList, links, setLinksData  )}
+          disabled={!isWeighted}
+        >
+          Prims MST
         </button>
       </div>
     </div>
