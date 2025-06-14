@@ -24,12 +24,14 @@ svg {
 @media (max-width: 768px) {
   .container {
     flex-direction: column;
-    padding: 1rem;
+    padding-top : 0.7rem;
+    padding-left: 0;
+    padding-right: 0;
   }
 
   .inputSection,
   .graphSection {
-    width: 80%;
+    width: 90%;
     margin: 0 auto;
   }
 
