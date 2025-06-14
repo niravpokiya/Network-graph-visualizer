@@ -3,14 +3,14 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function Bfs(src, prevNodes, onNodesChange, adjList) {
+async function Bfs(src, prevNodes, onNodesChange, adjList, speedrun) {
    const resetNodes = Reset(prevNodes)
     onNodesChange(resetNodes);
     prevNodes = resetNodes
     
   const visited = new Set();
   const queue = [src];
-
+  
   while (queue.length > 0) {
     const nodeId = queue.shift();
 
@@ -25,7 +25,10 @@ async function Bfs(src, prevNodes, onNodesChange, adjList) {
       return n;
     });
     onNodesChange([...updated]);
+    if(!speedrun.current)
     await sleep(500);
+    else
+    await sleep(100);
 
     // ➕ Enqueue neighbors
     for (const neighbor of adjList[nodeId] || []) {
@@ -42,7 +45,10 @@ async function Bfs(src, prevNodes, onNodesChange, adjList) {
       return n;
     });
     onNodesChange([...final]);
+    if(!speedrun.current)
     await sleep(500);
+    else
+    await sleep(100);
   }
 }
 

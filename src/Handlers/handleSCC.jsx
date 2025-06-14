@@ -1,7 +1,9 @@
 import findSCC from "../Algorithms/SCC";
 
-const handleSCC = async (nodes, setNodes, adjList) => {
-    if (nodes.length === 0) return;
-    await findSCC(nodes, setNodes, adjList);
-  };
+const handleSCC = async (nodes, setNodes, adjList, isDirected, speedrunRef) => {
+  if (!isDirected) return;
+  await findSCC(nodes, setNodes, adjList, speedrunRef);
+  speedrunRef.current = false;
+};
+
 export default handleSCC

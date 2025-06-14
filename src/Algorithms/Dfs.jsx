@@ -4,7 +4,7 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function Dfs(src, prevNodes, onNodesChange, adjList) {
+async function Dfs(src, prevNodes, onNodesChange, adjList, speedrun) {
    const resetNodes = Reset(prevNodes)
     onNodesChange(resetNodes);
     prevNodes = resetNodes
@@ -14,7 +14,6 @@ async function Dfs(src, prevNodes, onNodesChange, adjList) {
   async function dfs(nodeId) {
     if (visited.has(nodeId)) return;
     visited.add(nodeId);
-    console.log(nodeId)
     // 🔶 Mark node as visiting (orange)
     const updated = prevNodes.map(n => {
         if (n.id === nodeId) {
@@ -24,7 +23,10 @@ async function Dfs(src, prevNodes, onNodesChange, adjList) {
         });
     onNodesChange(updated);
 
+    if(!speedrun.current)
     await sleep(500);
+    else
+    await sleep(100);
 
     // 🔁 Visit neighbors
     for (const neighbor of adjList[nodeId] || []) {
@@ -39,7 +41,11 @@ async function Dfs(src, prevNodes, onNodesChange, adjList) {
     return n;
     });
     onNodesChange(final);
+
+    if(!speedrun.current)
     await sleep(500);
+    else
+    await sleep(100);
   }
 
   await dfs(src);

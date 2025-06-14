@@ -1,4 +1,4 @@
-export async function runPrimsAlgorithm(nodes, setNodesData, links, setLinksData, adjList) {
+export async function runPrimsAlgorithm(nodes, setNodesData, links, setLinksData, adjList, speedrun) {
   const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
 
   const n = nodes.length;
@@ -44,8 +44,13 @@ export async function runPrimsAlgorithm(nodes, setNodesData, links, setLinksData
       }
     }
 
-    
+    if(!speedrun.current)
     await sleep(500);
+    else
+    await sleep(100);
+
+
+    
     setLinksData(links.map(link => {
       const sourceId = typeof link.source === "object" ? link.source.id : link.source;
       const targetId = typeof link.target === "object" ? link.target.id : link.target;

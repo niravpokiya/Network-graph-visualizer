@@ -5,7 +5,8 @@
   min-width: 100vw;
   gap: 2rem;
   padding: 2rem;
-  background: linear-gradient(to right, #e0f7fa, #f1f8ff);
+  /* background: linear-gradient(to right, #e0f7fa, #f1f8ff); */
+  /* @apply bg-white dark:bg-gray-900 rounded-xl shadow-md; */
   min-height: max-content;
   box-sizing: border-box;
   flex-wrap: wrap;
@@ -86,8 +87,8 @@ svg {
 
 .graphSection {
   flex: 2;
-  background: white;
-  padding: 1rem;
+
+  /* padding: 1rem; */
   border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   max-width: 100%;

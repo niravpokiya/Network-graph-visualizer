@@ -4,7 +4,7 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function detectCycle(src, prevNodes, onNodesChange, adjList, isDirected, setCycleDetected) {
+async function detectCycle(src, prevNodes, onNodesChange, adjList, isDirected, setCycleDetected, speedrun) {
 
   // resetting nodes color
   const resetNodes = Reset(prevNodes)
@@ -24,7 +24,10 @@ async function detectCycle(src, prevNodes, onNodesChange, adjList, isDirected, s
       return n;
     });
     onNodesChange(updated);
+   if(!speedrun.current)
     await sleep(500);
+    else
+    await sleep(100);
   }
 
   async function dfsDirected(nodeId) {

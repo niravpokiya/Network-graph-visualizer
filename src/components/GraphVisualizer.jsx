@@ -14,7 +14,7 @@ const GraphVisualizer = ({ nodesData, linksData, isDirected, isWeighted }) => {
     const svg = d3.select(svgRef.current)
       .attr("viewBox", `0 0 ${width} ${height}`)
       .attr("preserveAspectRatio", "xMidYMid meet")
-      .classed("w-full h-auto bg-white rounded-2xl shadow-md", true);
+      .classed("w-full h-200 bg-gray-200 dark:bg-gray-800 rounded-2xl shadow-md", true);
 
     svg.selectAll("*").remove(); // Clear previous renders
 
@@ -53,7 +53,7 @@ const GraphVisualizer = ({ nodesData, linksData, isDirected, isWeighted }) => {
       ? svg.append("g").selectAll("text")
           .data(linksData)
           .join("text")
-          .attr("fill", "#333")
+          .attr("fill", "#fff")
           .attr("font-size", "12px")
           .attr("text-anchor", "middle")
       : null;
@@ -143,5 +143,5 @@ const GraphVisualizer = ({ nodesData, linksData, isDirected, isWeighted }) => {
 
   return <svg ref={svgRef}></svg>;
 };
-
+ 
 export default GraphVisualizer;
