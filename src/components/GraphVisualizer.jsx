@@ -14,7 +14,7 @@ const GraphVisualizer = ({ nodesData, linksData, isDirected, isWeighted }) => {
     const svg = d3.select(svgRef.current)
       .attr("viewBox", `0 0 ${width} ${height}`)
       .attr("preserveAspectRatio", "xMidYMid meet")
-      .classed("w-full h-200 bg-gray-200 dark:bg-gray-800 rounded-2xl shadow-md", true);
+      .classed("w-full h-200 bg-white dark:bg-gray-800 rounded-2xl shadow", true);
 
     svg.selectAll("*").remove(); // Clear previous renders
 

@@ -29,8 +29,8 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-950 text-gray-900 dark:text-gray-100">
-      <div className="container mx-auto p-4 bg-white dark:bg-gray-900 rounded-xl shadow-md">
+    <div className="min-h-screen bg-gray-200 dark:bg-gray-950 text-gray-900 dark:text-gray-100">
+      <div className="container mx-auto p-4 bg-gray-300 dark:bg-gray-900 rounded-xl shadow-md">
         <Input
           onInputChange={handleInputChange}
           nodes={nodes}
