@@ -1,4 +1,10 @@
+import Reset from "../components/ResetColors";
+
 export async function runPrimsAlgorithm(nodes, setNodesData, links, setLinksData, adjList, speedrun) {
+
+  const reset = Reset(nodes); // Reset colors
+    setNodesData(reset);
+    nodes = reset
   const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
 
   const n = nodes.length;

@@ -5,6 +5,7 @@ import handleCycleDetection from "../Handlers/handleCycleDetection";
 import handleSCC from "../Handlers/handleSCC";
 import handlePrims from "../Handlers/handlePrims";
 import DarkModeToggle from "./DarkMode";
+import handleKrushkals from "../Handlers/handleKrushkals";
 
 function Input({
   onInputChange,
@@ -160,6 +161,7 @@ function Input({
       </div>
 
       {/* Algorithm Buttons */}
+      
       <div className="algorithm-visualization flex flex-wrap gap-3 mt-4">
         {[
           {
@@ -207,6 +209,22 @@ function Input({
             onClick: () =>
               runWithLock(() =>
                 handlePrims(
+                  1,
+                  nodes,
+                  setNodes,
+                  adjList,
+                  links,
+                  setLinksData,
+                  speedrunRef
+                )
+              ),
+            disabled: !isWeighted || isRunning,
+          },
+          {
+            label: "Krushkal's MST",
+            onClick: () =>
+              runWithLock(() =>
+                handleKrushkals(
                   1,
                   nodes,
                   setNodes,
