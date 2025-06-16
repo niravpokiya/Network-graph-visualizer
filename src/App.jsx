@@ -7,6 +7,7 @@ import Dfs from './Algorithms/Dfs';
 import Bfs from './Algorithms/Bfs';
 import { link } from 'd3';
 import DarkModeToggle from './components/DarkMode';
+import { Result } from 'postcss';
 
 function App() {
   const [nodes, setNodes] = useState([]);
@@ -16,6 +17,7 @@ function App() {
   const [inputText, setInputText] = useState("");
   const [cycleDetected, setCycleDetected] = useState(false);
   const [weighted, setWeighted] = useState(false);
+  const [result, setResult] = useState("")
 
   useEffect(() => {
     const { nodes, links, adjList } = parseGraphInput(inputText, isDirected, weighted);
@@ -42,6 +44,8 @@ function App() {
           setIsWeighted={setWeighted}
           links={links}
           setLinksData={setLinks}
+          result = {result}
+          setResult = {setResult}
         />
         <div className="graphSection bg-gray-400 dark:bg-gray-900 rounded-xl shadow-md h-max ">
           <GraphVisualizer
@@ -50,6 +54,9 @@ function App() {
             isDirected={isDirected}
             isWeighted={weighted}
           />
+         <div className="mt-4 text-white text-lg font-mono">
+            {result}
+        </div>
         </div>
       </div>
     </div>

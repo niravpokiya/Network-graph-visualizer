@@ -6,6 +6,8 @@ import handleSCC from "../Handlers/handleSCC";
 import handlePrims from "../Handlers/handlePrims";
 import DarkModeToggle from "./DarkMode";
 import handleKrushkals from "../Handlers/handleKrushkals";
+import handleEulerPath from "../Handlers/handleEulerPath";
+import handleEulerCircuit from "../Handlers/handleEulerianCircuit";
 
 function Input({
   onInputChange,
@@ -20,6 +22,8 @@ function Input({
   setIsWeighted,
   links,
   setLinksData,
+  result,
+  setResult
 }) {
   const [source, setSource] = useState("");
   const [isRunning, setIsRunning] = useState(false);
@@ -27,6 +31,7 @@ function Input({
 
   const runWithLock = async (fn) => {
     if (isRunning) return;
+    setResult("")
     setIsRunning(true);
     try {
       await fn();
@@ -237,6 +242,38 @@ function Input({
                 )
               ),
             disabled: isDirected || !isWeighted || isRunning,
+          },
+          {
+            label: "Euler Path",
+            onClick: () =>
+              runWithLock(() =>
+                handleEulerPath(
+                  nodes,
+                  links,
+                  setNodes,
+                  setLinksData,
+                  speedrunRef, 
+                  isDirected,
+                  setResult
+                )
+              ),
+            disabled: isRunning,
+          },
+          {
+            label: "Euler Circuit",
+            onClick: () =>
+              runWithLock(() =>
+                handleEulerCircuit(
+                  nodes,
+                  links,
+                  setNodes,
+                  setLinksData,
+                  speedrunRef,
+                  isDirected,
+                  setResult
+                )
+              ),
+            disabled: isRunning,
           },
         ].map(({ label, onClick, disabled }) => (
           <button
