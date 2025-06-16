@@ -293,7 +293,7 @@ function Input({
 
       {/* Speed Run Button */}
       <button
-        disabled={!isRunning}
+        hidden={!isRunning}
         onClick={() => (speedrunRef.current = "fast")}
         className={`mt-4 px-4 py-2 rounded-lg font-semibold  transition ${
           isRunning
@@ -304,7 +304,7 @@ function Input({
          ⚡ Speed Run
       </button>
       <button
-        disabled={!isRunning}
+        hidden={!isRunning}
         onClick={() => (speedrunRef.current = "skip")}
         className={`mt-4 px-4 py-2 rounded-lg font-semibold transition ${
           isRunning
