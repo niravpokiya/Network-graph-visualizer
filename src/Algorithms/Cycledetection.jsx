@@ -84,7 +84,7 @@ async function detectCycle(src, prevNodes, onNodesChange, adjList, isDirected, s
         await dfsUndirected(node.id, null);
       }
       // setCycleDetected(foundCycle)
-      if (foundCycle) return;
+      // if (foundCycle) return;
     }
   }
 }
