@@ -2,7 +2,8 @@
 
 Interactive, responsive, and theme-aware **Graph Visualizer** built with **React**, **TailwindCSS**, and **D3.js**. Supports both **directed** and **undirected** graphs with powerful algorithms like **DFS**, **BFS**, **MST (Prim's)**, and **SCC** – all visualized beautifully.
 
-![Graph Screenshot](./assets/preview.png) <!-- Add actual path if available -->
+![Preview](https://github.com/user-attachments/assets/35270409-e97e-4341-addd-1d65b735c336)
+
 
 ---
 
