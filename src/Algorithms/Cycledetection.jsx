@@ -4,11 +4,12 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-async function detectCycle(src, prevNodes, onNodesChange, adjList, isDirected, setCycleDetected, speedrun) {
+async function detectCycle(src, prevNodes, onNodesChange, adjList, isDirected, setCycleDetected, delay, speedrun, links, setLinksData) {
 
   // resetting nodes color
-  const resetNodes = Reset(prevNodes)
+  const [resetNodes, resetLinks] = Reset(prevNodes, links)
   onNodesChange(resetNodes);
+  setLinksData(resetLinks);
   prevNodes = resetNodes
 
   
@@ -24,10 +25,14 @@ async function detectCycle(src, prevNodes, onNodesChange, adjList, isDirected, s
       return n;
     });
     onNodesChange(updated);
-   if(!speedrun.current)
-    await sleep(500);
-    else
-    await sleep(100);
+
+    if (speedrun.current === "fast") {
+      delay = 100;
+    } else if (speedrun.current === "skip") {
+      delay = 0;
+    }
+
+    await sleep(delay);
   }
 
   async function dfsDirected(nodeId) {
@@ -78,7 +83,7 @@ async function detectCycle(src, prevNodes, onNodesChange, adjList, isDirected, s
       } else {
         await dfsUndirected(node.id, null);
       }
-      setCycleDetected(foundCycle)
+      // setCycleDetected(foundCycle)
       if (foundCycle) return;
     }
   }

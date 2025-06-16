@@ -1,10 +1,12 @@
 import Reset from "../components/ResetColors";
 
-export default function Kruskal(nodes, links, setNodes, setLinks, delay = 500) {
+export default function Kruskal(nodes, links, setNodes, setLinks, delay, speedrun) {
 
-  const reset = Reset(nodes); // Reset colors
-    setNodes(reset);
-    nodes = reset
+  const [resetNodes, resetLinks] = Reset(nodes, links); // Reset colors
+    setNodes(resetNodes);
+    setLinks(resetLinks)
+    nodes = resetNodes
+    links= resetLinks
 
   const sleep = (ms) => new Promise((res) => setTimeout(res, ms));
 
@@ -68,6 +70,12 @@ export default function Kruskal(nodes, links, setNodes, setLinks, delay = 500) {
             return node;
           });
         });
+
+        if (speedrun.current === "fast") {
+          delay = 100;
+        } else if (speedrun.current === "skip") {
+          delay = 0;
+        }
 
         await sleep(delay);
       }

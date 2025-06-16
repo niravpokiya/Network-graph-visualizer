@@ -23,7 +23,7 @@ function Input({
 }) {
   const [source, setSource] = useState("");
   const [isRunning, setIsRunning] = useState(false);
-  const speedrunRef = useRef(false);
+  const speedrunRef = useRef("");
 
   const runWithLock = async (fn) => {
     if (isRunning) return;
@@ -168,7 +168,7 @@ function Input({
             label: "DFS",
             onClick: () =>
               runWithLock(() =>
-                handleDFS(source, nodes, setNodes, adjList, speedrunRef)
+                handleDFS(source, nodes, setNodes, adjList, speedrunRef, links, setLinksData)
               ),
             disabled: !source || isRunning,
           },
@@ -176,7 +176,7 @@ function Input({
             label: "BFS",
             onClick: () =>
               runWithLock(() =>
-                handleBFS(source, nodes, setNodes, adjList, speedrunRef)
+                handleBFS(source, nodes, setNodes, adjList, speedrunRef, links, setLinksData)
               ),
             disabled: !source || isRunning,
           },
@@ -184,7 +184,7 @@ function Input({
             label: "Strongly Connected Components",
             onClick: () =>
               runWithLock(() =>
-                handleSCC(nodes, setNodes, adjList, isDirected, speedrunRef)
+                handleSCC(nodes, setNodes, adjList, isDirected, speedrunRef, links, setLinksData)
               ),
             disabled: !isDirected || isRunning,
           },
@@ -199,13 +199,15 @@ function Input({
                   adjList,
                   isDirected,
                   setCycleDetected,
-                  speedrunRef
+                  speedrunRef, 
+                  links,
+                  setLinksData
                 )
               ),
             disabled: isRunning,
           },
           {
-            label: "Prims MST",
+            label: "Prim's MST",
             onClick: () =>
               runWithLock(() =>
                 handlePrims(
@@ -218,7 +220,7 @@ function Input({
                   speedrunRef
                 )
               ),
-            disabled: !isWeighted || isRunning,
+            disabled: isDirected || !isWeighted || isRunning,
           },
           {
             label: "Krushkal's MST",
@@ -234,7 +236,7 @@ function Input({
                   speedrunRef
                 )
               ),
-            disabled: !isWeighted || isRunning,
+            disabled: isDirected || !isWeighted || isRunning,
           },
         ].map(({ label, onClick, disabled }) => (
           <button
@@ -255,14 +257,25 @@ function Input({
       {/* Speed Run Button */}
       <button
         disabled={!isRunning}
-        onClick={() => (speedrunRef.current = true)}
+        onClick={() => (speedrunRef.current = "fast")}
+        className={`mt-4 px-4 py-2 rounded-lg font-semibold  transition ${
+          isRunning
+            ? "bg-red-600 hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600 text-white cursor-pointer"
+            : "bg-gray-300 dark:bg-gray-700 text-gray-500 cursor-not-allowed"
+        }`}
+      >
+         ⚡ Speed Run
+      </button>
+      <button
+        disabled={!isRunning}
+        onClick={() => (speedrunRef.current = "skip")}
         className={`mt-4 px-4 py-2 rounded-lg font-semibold transition ${
           isRunning
             ? "bg-red-600 hover:bg-red-700 dark:bg-red-500 dark:hover:bg-red-600 text-white cursor-pointer"
             : "bg-gray-300 dark:bg-gray-700 text-gray-500 cursor-not-allowed"
         }`}
       >
-        ⚡ Speed Run
+        Skip Animation
       </button>
     </div>
   );

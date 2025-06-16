@@ -1,8 +1,10 @@
 import detectCycle from "../Algorithms/Cycledetection";
 
-const handleCycleDetection = async (src, prevNodes, setNodes, adjList, isDirected, setCycleDetected, speedrun) => {
+const handleCycleDetection = async (src, prevNodes, setNodes, adjList, isDirected, setCycleDetected, speedrun, links, setLinksData) => {
     // if (nodes.length === 0) return;
-    await detectCycle(src, prevNodes, setNodes, adjList, isDirected, setCycleDetected, speedrun);
-    speedrun.current = false
+    let delay = 500;
+    
+    await detectCycle(src, prevNodes, setNodes, adjList, isDirected, setCycleDetected,delay, speedrun, links, setLinksData);
+    speedrun.current = ""
   };
 export default handleCycleDetection

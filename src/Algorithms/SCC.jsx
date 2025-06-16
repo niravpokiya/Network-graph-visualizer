@@ -13,10 +13,11 @@ const SCC_COLORS = [
   "#dcbeff", "#a9a9a9", "#ffb6c1", "#b0e0e6", "#20b2aa"
 ];
 
-async function findSCC(prevNodes, onNodesChange, adjList, speedrun) {
-  const reset = Reset(prevNodes); // Reset colors
-  onNodesChange(reset);
-  prevNodes = reset
+async function findSCC(prevNodes, onNodesChange, adjList, delay, speedrun, links, onLinksChange) {
+  const [resetNodes, resetLinks] = Reset(prevNodes, links); // Reset colors
+  onNodesChange(resetNodes);
+  onLinksChange(resetLinks);
+  prevNodes = resetNodes
 
   const visited = new Set();
   const stack = [];
@@ -58,10 +59,13 @@ async function findSCC(prevNodes, onNodesChange, adjList, speedrun) {
       return n;
     });
     onNodesChange(updated);
-    if(speedrun.current == false)
-        await sleep(500);
-    else
-        await sleep(100)
+    if (speedrun.current === "fast") {
+      delay = 100;
+    } else if (speedrun.current === "skip") {
+      delay = 0;
+    }
+
+    await sleep(delay);
 
     for (const neighbor of transpose[nodeId] || []) {
       if (!visited.has(neighbor)) {
