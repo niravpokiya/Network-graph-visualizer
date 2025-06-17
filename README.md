@@ -14,6 +14,7 @@ Interactive, responsive, and theme-aware **Graph Visualizer** built with **React
 - 🧮 **Weighted Graphs** with **edge weights**
 - 🌳 **Minimum Spanning Tree (Prim's Algorithm)**
 - 🔁 **Strongly Connected Components (SCC)**
+- 💫 **Euler path and circuit** 
 - 🎨 **Responsive Design**
 - 🌗 **Dark/Light Mode Toggle**
 - 🧠 Smart edge drawing with **node-safe anchoring**
