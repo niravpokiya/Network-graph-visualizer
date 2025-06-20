@@ -53,7 +53,7 @@ function App() {
         <div className="graphSection bg-gray-400 dark:bg-gray-900 rounded-xl shadow-md h-max ">
 
           {resultReady && (
-            <div className="mt-2 text-green-400 font-medium sticky">
+            <div className="mt-2 text-green-400 font-medium absolute">
               ✅ result is ready! You can see by clicking on below show result button!
             </div>
           )}
