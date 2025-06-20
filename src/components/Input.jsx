@@ -8,6 +8,7 @@ import DarkModeToggle from "./DarkMode";
 import handleKrushkals from "../Handlers/handleKrushkals";
 import handleEulerPath from "../Handlers/handleEulerPath";
 import handleEulerCircuit from "../Handlers/handleEulerianCircuit";
+import handleDijkstra from "../Handlers/handleDijkstra";
 
 function Input({
   onInputChange,
@@ -23,7 +24,8 @@ function Input({
   links,
   setLinksData,
   result,
-  setResult
+  setResult,
+  setResultReady
 }) {
   const [source, setSource] = useState("");
   const [isRunning, setIsRunning] = useState(false);
@@ -66,6 +68,7 @@ function Input({
             <li>For finding SCCs, graph should be directed</li>
             <li>For visualizing DFS, BFS, source should be given</li>
             <li>For visualizing Prims, the graph should be weighted</li>
+            <li>Euler path, circuit, and dijkstra results provided in below button. clicking on that modal will open and you can see result.</li>
           </ul>
         </div>
       </details>
@@ -242,6 +245,22 @@ function Input({
                 )
               ),
             disabled: isDirected || !isWeighted || isRunning,
+          },
+          {
+            label: "Dijkstra",
+            onClick: () =>
+              runWithLock(() =>
+                handleDijkstra(
+                  source,
+                  nodes,
+                  links,
+                  isWeighted,
+                  isDirected,
+                  setResult,
+                  setResultReady
+                )
+              ),
+            disabled: !source || isRunning,
           },
           {
             label: "Euler Path",

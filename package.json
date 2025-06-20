@@ -13,6 +13,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@datastructures-js/priority-queue": "^6.3.3",
     "@tailwindcss/vite": "^4.1.10",
     "d3": "^7.9.0",
     "daisyui": "^5.0.43",

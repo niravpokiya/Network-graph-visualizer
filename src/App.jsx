@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { use, useEffect, useState } from 'react';
 import './App.css';
 import GraphVisualizer from './components/GraphVisualizer';
 import Input from './components/Input';
@@ -8,6 +8,7 @@ import Bfs from './Algorithms/Bfs';
 import { link } from 'd3';
 import DarkModeToggle from './components/DarkMode';
 import { Result } from 'postcss';
+import ResultModal from './components/Modal';
 
 function App() {
   const [nodes, setNodes] = useState([]);
@@ -18,6 +19,7 @@ function App() {
   const [cycleDetected, setCycleDetected] = useState(false);
   const [weighted, setWeighted] = useState(false);
   const [result, setResult] = useState("")
+  const [resultReady, setResultReady] = useState(false)
 
   useEffect(() => {
     const { nodes, links, adjList } = parseGraphInput(inputText, isDirected, weighted);
@@ -46,17 +48,23 @@ function App() {
           setLinksData={setLinks}
           result = {result}
           setResult = {setResult}
+          setResultReady={setResultReady}
         />
         <div className="graphSection bg-gray-400 dark:bg-gray-900 rounded-xl shadow-md h-max ">
+
+          {resultReady && (
+            <div className="mt-2 text-green-400 font-medium sticky">
+              ✅ result is ready! You can see by clicking on below show result button!
+            </div>
+          )}
+
           <GraphVisualizer
             nodesData={nodes}
             linksData={links}
             isDirected={isDirected}
             isWeighted={weighted}
           />
-         <div className="mt-4 text-white text-lg font-mono">
-            {result}
-        </div>
+         <ResultModal result = {result} />
         </div>
       </div>
     </div>
